@@ -119,9 +119,13 @@ class ImageService
     public function delete($image)
     {
         if (isset($image)) {
-            Storage::disk('public')->delete('images/' . $image->name);
+            Storage::disk('public')->delete('images/' . $image['name']);
             $image->delete();
         }
+    }
+
+    public function get($image_id){
+       return $this->image->find($image_id);
     }
 
     public function all(){

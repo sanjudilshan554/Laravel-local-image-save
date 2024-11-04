@@ -17,8 +17,18 @@ class ImageServiceController extends Controller
         }
     }
 
+    public function get($image_id)
+    {
+        return ImageFacade::get($image_id);
+    }
+
     public function all()
     {
         return ImageFacade::all();
+    }
+
+    public function delete(Request $request)
+    {
+        return ImageFacade::delete($request->all());
     }
 }

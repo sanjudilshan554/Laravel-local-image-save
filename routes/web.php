@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('image')->group(function () {
      Route::post('/store', [ImageServiceController::class, 'store'])->name('image.store');
      Route::get('/all', [ImageServiceController::class, 'all'])->name('image.all');
+     Route::get('/get/{image_id}', [ImageServiceController::class, 'get'])->name('image.get');
+     Route::post('/delete', [ImageServiceController::class, 'delete'])->name('image.delete');
 });
 
 
