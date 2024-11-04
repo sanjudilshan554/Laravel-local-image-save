@@ -2,7 +2,7 @@
 
 namespace domain\Services\ImageService;
 
- 
+
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
@@ -34,7 +34,7 @@ class ImageService
         if (isset($image)) {
             // Store the original image temporarily
             $originalPath = $image->store('tmp');
-            
+
             $sourcePath = storage_path('app/' . $originalPath);
 
             // Define the path for the WebP image
@@ -106,7 +106,7 @@ class ImageService
         }
 
         throw new \Exception('No image provided');
-    } 
+    }
 
 
     /**
@@ -122,5 +122,9 @@ class ImageService
             Storage::disk('public')->delete('images/' . $image->name);
             $image->delete();
         }
+    }
+
+    public function all(){
+        return $this->image->all();
     }
 }
