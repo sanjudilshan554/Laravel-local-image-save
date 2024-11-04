@@ -1,8 +1,3 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-</script>
-
 <template>
     <Head title="Dashboard" />
 
@@ -21,10 +16,50 @@ import { Head } from '@inertiajs/vue3';
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
                 >
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        You're logged in!
+                        Local image save service
                     </div>
+                </div>
+
+                <div class="">
+                    <form @submit.prevent="saveImage">
+                        <input type="file" @change="handleFileChange">
+
+                        <button type="submit" class="text-white">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import axios from 'axios';
+import { ref }  from 'vue';
+
+
+const data = ref({
+    image: null,
+});
+
+const handleFileChange = (event) => {
+    data.value.image = event.target.files[0];
+}
+
+const saveImage = async () => {
+    try{
+        console.log('data', data.value);
+        const response  = await axios.post(route('image.store'), data.value,{
+            headers:{
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        console.log('res',response);
+    }catch(error){
+        console.log('error', error);
+    }
+}
+
+</script>
+
