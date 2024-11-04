@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\ImageSaveController;
 
-use App\Http\Controllers\Controller;
-use Domain\Facades\ImageFacade\ImageFacade;
+use App\Http\Controllers\Controller; 
+use domain\Facades\ImageFacade\ImageFacade;
 use Illuminate\Http\Request;
 
 class ImageServiceController extends Controller
 {
     public function store(Request $request){
-        return $request;
-        return ImageFacade::store($request->all());
+
+        if ($request->hasFile('image')) {
+            return ImageFacade::store($request->file('image'));
+        } else {
+            return 1;
+        }
+        
+        
     }
 }
