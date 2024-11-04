@@ -24,21 +24,23 @@
                         </form>
                     </div>
 
-                    <div class="text-center text-white">
+                    <div class="text-white">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">id</th>
                                     <th scope="col">image</th>
-                                    <th scope="col"> d</th>
+                                    <th scope="col">  </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="image in imageData">
                                     <td>{{ image.id }}</td>
                                     <td class="text-center">
-                                        <img :src="image.name" alt="" width="200"
-                                            class="text-center align-item-center just">
+                                        <div class="image-layout">
+                                            <img :src="image.name" alt="" class="text-center image-setup">
+                                        </div>
+
                                     </td>
                                     <td><i class="bi bi-trash text-danger cursor-pointer"
                                             @click.prevent="openDeleteModal(image.id)"></i></td>
@@ -65,7 +67,8 @@
                         Are you sure you want delete that image?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click.prevent="closeDeleteModal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            @click.prevent="closeDeleteModal">Cancel</button>
                         <button type="button" class="btn btn-danger" @click.prevent="deleteImage">Delete</button>
                     </div>
                 </div>
@@ -119,7 +122,7 @@ const getImages = async () => {
 
 const openDeleteModal = async (image_id) => {
     try {
-        const response = await axios.get(route('image.get',image_id));
+        const response = await axios.get(route('image.get', image_id));
         image.value = response.data;
         $('#exampleModal').modal('show');
     } catch (error) {
@@ -128,7 +131,7 @@ const openDeleteModal = async (image_id) => {
 }
 
 const closeDeleteModal = async () => {
-    try { 
+    try {
         $('#exampleModal').modal('hide');
     } catch (error) {
         console.log('error', error);
@@ -138,7 +141,8 @@ const closeDeleteModal = async () => {
 
 const deleteImage = async () => {
     try {
-        const response = await axios.post(route('image.delete'), image.value); 
+        await axios.post(route('image.delete'), image.value);
+        $('#exampleModal').modal('hide');
         getImages();
     } catch (error) {
         console.log('error', error);
@@ -151,4 +155,17 @@ onMounted(() => {
 })
 </script>
 
-<style></style>
+<style>
+.image-layout {
+    max-width: 200px !important;
+    max-height: 100px !important;
+    overflow: hidden !important; 
+}
+
+.image-setup {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+</style>

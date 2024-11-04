@@ -120,15 +120,18 @@ class ImageService
     {
         if (isset($image)) {
             Storage::disk('public')->delete('images/' . $image['name']);
-            $image->delete();
+            $db_data = $this->image->find($image['id']);
+            return $db_data->delete();
         }
     }
 
-    public function get($image_id){
-       return $this->image->find($image_id);
+    public function get($image_id)
+    {
+        return $this->image->find($image_id);
     }
 
-    public function all(){
+    public function all()
+    {
         return $this->image->all();
     }
 }
